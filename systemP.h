@@ -16,6 +16,8 @@ const unsigned int MinFreeBirthLapin = 4;
 
 enum animal {nul, renard, lapin};
 
+enum sexe {male, femelle};
+
 struct Coordonnee{
     int x,y;
 };
@@ -24,6 +26,8 @@ struct Case{
     int food;
     animal espece;
     Coordonnee coord;
+    //sexe sx;
+    //int age;
 };
 
 //const int n = 20;
