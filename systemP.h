@@ -4,6 +4,8 @@
 
 using namespace std;
 
+const int nl = 20;
+const int nL = 20;
 const unsigned int FoodReprod = 8; 
 const unsigned int FoodInit = 5; 
 const unsigned int FoodLapin = 5; 
@@ -25,6 +27,9 @@ struct Case{
     bool deplace;
 };
 
-const int n = 20;
-using colone = Case[n];
-using grille = colone[n];
+//const int n = 20;
+//using colone = Case[n];
+//using grille = colone[n];
+
+void afficheGrille(Case (&grille)[nL][nl]);
+void InitGrille(Case (&grille)[nL][nl]);
