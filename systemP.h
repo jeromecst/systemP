@@ -24,7 +24,6 @@ struct Case{
     int food;
     animal espece;
     Coordonnee coord;
-    bool deplace;
 };
 
 //const int n = 20;
