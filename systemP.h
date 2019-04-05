@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>     
 
 using namepsace std;
 
