@@ -27,7 +27,7 @@ struct Case{
     bool deplace:
 };
 
-void InitGrille(int x, int y);
+Case InitGrille(int x, int y);
 void Deplacement(animal A, grille G);
 void Reproduction(Case C);
 void ActualiseFaim(grille G);
