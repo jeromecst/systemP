@@ -1,6 +1,9 @@
 #include <iostream>
 #include <stdlib.h>     
+#include <time.h>
 
+
+srand (time(NULL));
 using namepsace std;
 
 const unsigned int FoodInit = 5; 
