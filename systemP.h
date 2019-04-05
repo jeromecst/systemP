@@ -24,3 +24,7 @@ struct Case{
     Coordonnee coord;
     bool deplace;
 };
+
+const int n = 20;
+using colone = Case[n];
+using grille = colone[n];
