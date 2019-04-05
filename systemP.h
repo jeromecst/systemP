@@ -18,7 +18,7 @@ struct Coordonnee{
 
 struct Case{
     int food;
-    espece espece;
+    animal animal;
     Coordonnee coord;
     bool deplace:
 };
