@@ -81,3 +81,63 @@ bool Reproduction(Case C){
     return false;
 }
 
+Coordonnee PositionRandom(Case (&grille)[nL][nl],const Case (&grille2)[nL][nl], Case C){
+    struct CoordPossible{
+        bool possible;
+        Coordonnee cord;
+    };
+    struct ensCoordPossible{
+        int taille;
+        CoordPossible tab[8];
+    };
+
+    ensCoordPossible ECP;
+    ECP.taille = 8;
+
+    CoordPossible Hg = {true, {C.coord.x-1, C.coord.y-1}};
+    ECP.tab[0]=Hg;
+
+    CoordPossible H = {true, {C.coord.x-1, C.coord.y}};
+    ECP.tab[1]=H;
+
+    CoordPossible Hd = {true, {C.coord.x-1, C.coord.y+1}};
+    ECP.tab[2]=Hd;
+
+    CoordPossible D = {true, {C.coord.x, C.coord.y+1}};
+    ECP.tab[3]=D;
+
+    CoordPossible Bd = {true, {C.coord.x+1, C.coord.y+1}};
+    ECP.tab[4]=Bd;
+
+    CoordPossible B = {true, {C.coord.x+1, C.coord.y}};
+    ECP.tab[5]=B;
+
+    CoordPossible Bg = {true, {C.coord.x+1, C.coord.y-1}};
+    ECP.tab[6]=Bg;
+
+    CoordPossible G = {true, {C.coord.x, C.coord.y-1}};
+    ECP.tab[7]=G;
+
+    for(int i=0; i<8; i++){
+        if(ECP.tab[i].cord.x <0 or ECP.tab[i].cord.y <0 or ECP.tab[i].cord.x >19 or ECP.tab[i].cord.y > 19 ){
+            ECP.tab[i].possible = false;
+            ECP.taille-= 1;
+        }
+        else if(grille[ECP.tab[i].cord.x][ECP.tab[i].cord.y].espece != nul and grille2[ECP.tab[i].cord.x][ECP.tab[i].cord.y].espece != nul){
+            ECP.tab[i].possible = false;
+            ECP.taille-= 1;
+        }
+    }
+
+    grille[C.coord.x][C.coord.y].nbCaseVides = ECP.taille;
+
+    int random = rand() % ECP.taille;
+    int k=0;
+    for(int i=0; i<8; i++){
+        if (k==random) return ECP.tab[i].cord;
+        else if (ECP.tab[i].possible){
+            k++;
+        }
+    }
+    return C.coord;
+}
