@@ -43,3 +43,11 @@ void ActualiseFaim(Case (&grille)[nL][nl]){
         }
     }
 }
+
+void GrilleVide(Case (&grille)[nL][nl]){
+    for(int i=0; i<nL; i++){
+        for(int j=0; j<nl; j++){
+            grille[i][j].espece = nul;
+        }
+    }
+}
