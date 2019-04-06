@@ -276,3 +276,23 @@ void DeplacementRenard(Case (&grille)[nL][nl]){
         }
     }     
 }
+                       
+                       
+bool fin(Case (&grille)[nL][nl]){
+    int u = 0;
+    int v = 0;
+    for (int i = 0; i < nL; i++){
+        for(int j = 0; j < nl; i++){
+            if(grille[i][j].espece != nul){
+                u++;
+            }
+            if(grille[i][j].espece == renard){
+                v++;
+            }
+        }
+    }
+    if(u != 0 or v != 0){
+        return false;
+    }
+    return true;
+}
