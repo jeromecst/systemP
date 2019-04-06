@@ -31,6 +31,14 @@ struct Case{
     //int age;
 };
 
+struct CoordPossible{
+    bool possible;
+    Coordonnee cord;
+};
+struct ensCoordPossible{
+    int taille;
+    CoordPossible tab[8];
+};
 
 void AfficheGrille(Case (&grille)[nL][nl]);
 void InitGrille(Case (&grille)[nL][nl]);
