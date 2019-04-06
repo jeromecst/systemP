@@ -21,8 +21,6 @@ int main(){
     for(int i=0; i<60; i++) cout << "#";
     cout << endl<< endl;
 
-    DeplacementLapin(grille);
-
     for(int i=0; i<nL; i++){
         for(int j=0; j<nl ; j++){
             if(grille[i][j].espece==lapin) nbL+=1;

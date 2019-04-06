@@ -4,8 +4,8 @@
 
 using namespace std;
 
-const int nl = 20;
-const int nL = 20;
+const int nl = 5;
+const int nL = 5;
 const unsigned int FoodReprod = 8; 
 const unsigned int FoodInit = 5; 
 const unsigned int FoodLapin = 5; 
@@ -51,4 +51,4 @@ void Manger(Case &C);
 bool Reproduction(Case C);
 void DeplacementLapin(Case (&grille)[nL][nl]);
 void initCase(Case &C, animal A, Coordonnee coord);
-bool MangeLapin(Case &C);
+bool MangeLapin(Case (&grille)[nL][nl], Case (&grille2)[nL][nl], Case &C);

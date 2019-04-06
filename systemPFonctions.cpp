@@ -70,15 +70,6 @@ void initCase(Case &C, animal A, Coordonnee coord){
 }
 
 Coordonnee PositionRandom(Case (&grille)[nL][nl],Case (&grille2)[nL][nl], Case C){
-    struct CoordPossible{
-        bool possible;
-        Coordonnee cord;
-    };
-    struct ensCoordPossible{
-        int taille;
-        CoordPossible tab[8];
-    };
-
     ensCoordPossible ECP;
     ECP.taille = 8;
 
@@ -164,7 +155,7 @@ void DeplacementLapin(Case (&grille)[nL][nl]){
                 newcoord = PositionRandom(grille, G, grille[i][j]);
                 G[newcoord.x][newcoord.y] = grille[i][j];
                 G[newcoord.x][newcoord.y].coord = newcoord;
-                if(Reproduction(grille[i][j])){
+                if(Reproduction(grille[i][j]) and (grille[i][j].coord.x != i or grille[i][j].coord.y != j) ){
                     G[i][j].espece=lapin;
                     G[i][j].coord.x=i;
                     G[i][j].coord.x=j;
@@ -214,7 +205,7 @@ bool MangeLapin(Case (&grille)[nL][nl], Case (&grille2)[nL][nl], Case &C){
             ECP.tab[i].possible = false;
             ECP.taille--;
         }
-        else if(grille[ECP.tab[i].cord.x][ECP.tab[i].cord.y].espece != lapin){
+        else if(grille[ECP.tab[i].cord.x][ECP.tab[i].cord.y].espece != lapin or grille2[ECP.tab[i].cord.x][ECP.tab[i].cord.y].espece != lapin){
             ECP.tab[i].possible = false;
             ECP.taille--;
         }
@@ -237,15 +228,15 @@ void DeplacementRenard(Case (&grille)[nL][nl]){
     Case G[nL][nl];
     GrilleVide(G);
     Coordonnee newcoord;
-        for(int i=0; i<nL; i++){
-            for(int j=0; j<nl; j++){
-                if(grille[i][j].espece == lapin) G[i][j] = grille[i][j];
-            }
+    for(int i=0; i<nL; i++){
+        for(int j=0; j<nl; j++){
+            if(grille[i][j].espece == lapin) G[i][j] = grille[i][j];
         }
-    for(int i = 0; i > nL; i++){
-        for(int j = 0; j > nl; j++){
+    }
+    for(int i = 0; i < nL; i++){
+        for(int j = 0; j < nl; j++){
             if(grille[i][j].espece == renard){
-               if(MangeLapin(grille[i][j])){
+               if(MangeLapin(grille,G, grille[i][j])){
                    if(Reproduction(grille[i][j])){
                        G[i][j].espece = renard;
                        G[i][j].coord.x = i;
@@ -253,46 +244,28 @@ void DeplacementRenard(Case (&grille)[nL][nl]){
                        G[i][j].food = FoodInit;
                     }
                    G[grille[i][j].coord.x][grille[i][j].coord.y] = grille[i][j];
-                   Manger(G[grille[i][j].coord.x][grille[i][j].coord.y]);
+                   G[grille[i][j].coord.x][grille[i][j].coord.y].food+=5;
+                   if (G[grille[i][j].coord.x][grille[i][j].coord.y].food >10) G[grille[i][j].coord.x][grille[i][j].coord.y].food =10;
                }
-               else{
+                else{
                     newcoord = PositionRandom(grille, G, grille[i][j]);
                     G[newcoord.x][newcoord.y] = grille[i][j];
                     G[newcoord.x][newcoord.y].coord = newcoord;
-                    if(Reproduction(grille[i][j]) && (newcoord.x != i or newcoord.y != j){
+                    if( Reproduction(grille[i][j]) && (newcoord.x != i or newcoord.y != j) ){
                         G[i][j].espece = renard; 
                         G[i][j].coord.x = i;
                         G[i][j].coord.y = j;
                         G[i][j].food = FoodInit;
                     }
                 }
+                grille[i][j].espece=nul;
             }
         }
     }
-        GrilleVide(grille);
+    GrilleVide(grille);
     for(int i=0; i<nL; i++){
         for(int j=0; j<nl; j++){
             grille[i][j]=G[i][j];
         }
     }     
-}
-                       
-                       
-bool fin(Case (&grille)[nL][nl]){
-    int u = 0;
-    int v = 0;
-    for (int i = 0; i < nL; i++){
-        for(int j = 0; j < nl; i++){
-            if(grille[i][j].espece != nul){
-                u++;
-            }
-            if(grille[i][j].espece == renard){
-                v++;
-            }
-        }
-    }
-    if(u != 0 or v != 0){
-        return false;
-    }
-    return true;
 }
