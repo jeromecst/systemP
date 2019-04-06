@@ -40,6 +40,9 @@ void ActualiseFaim(Case (&grille)[nL][nl]);
 void GrilleVide(Case (&grille)[nL][nl]);
 Coordonnee PositionRandom(Case (&grille)[nL][nl],const Case (&grille2)[nL][nl], Case C);
 bool CaseVide(const Case (&grille)[nL][nl],const Case (&grille2)[nL][nl],Coordonnee C);
-
+void DeplacementRenard(Case (&grille)[nL][nl]);
+void Manger(Case &C);
 bool Reproduction(Case C);
+void DeplacementLapin(Case (&grille)[nL][nl]);
 void initCase(Case &C, animal A, Coordonnee coord);
+bool LapinAutour(Case &C);
