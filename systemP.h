@@ -43,4 +43,4 @@ void Manger(Case &C);
 bool Reproduction(Case C);
 void DeplacementLapin(Case (&grille)[nL][nl]);
 void initCase(Case &C, animal A, Coordonnee coord);
-bool LapinAutour(Case &C);
+bool MangeLapin(Case &C);
