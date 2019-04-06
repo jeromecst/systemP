@@ -141,3 +141,29 @@ Coordonnee PositionRandom(Case (&grille)[nL][nl],const Case (&grille2)[nL][nl], 
     }
     return C.coord;
 }
+
+void DeplacementLapin(Case (&grille)[nL][nl]){
+    Case G[nL][nl];
+    GrilleVide(G);
+    Coordonnee newcoord;
+    for(int i = 0; i < nL; i++){
+        for(int j = 0; j < nl; j++){
+            if(grille[i][j].espece == lapin){
+                newcoord = PositionRandom(grille, G, grille[i][j]);
+                if(newcoord != grille[i][j].coord && Reproduction(grille[i][j])){
+                    Coordonee bb;
+                    bb.x = i;
+                    bb.y = j;
+                    initCase(G.[i][j], lapin, bb);
+                } 
+                G.[newcoord.x][newcoord.y] = grille[i][j];
+                G.[newcoord.x][newcoord.y].coord = newcoord;
+            }
+            if(grille[i][j].espece == renard){
+                G[i][j] = grille[i][j];
+            }
+        }
+
+    }
+    grille = G;     
+}
