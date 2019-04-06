@@ -150,7 +150,7 @@ void DeplacementLapin(Case (&grille)[nL][nl]){
         for(int j = 0; j < nl; j++){
             if(grille[i][j].espece == lapin){
                 newcoord = PositionRandom(grille, G, grille[i][j]);
-                if(newcoord != grille[i][j].coord && Reproduction(grille[i][j])){
+                if(newcoord.x != i and newcoord.y != j && Reproduction(grille[i][j])){
                     Coordonee bb;
                     bb.x = i;
                     bb.y = j;
