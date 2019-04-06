@@ -32,3 +32,14 @@ void InitGrille(Case (&grille)[nL][nl]){
         }
     }
 }
+
+void ActualiseFaim(Case (&grille)[nL][nl]){
+    for(int i=0; i<nL; i++){
+        for(int j=0; j<nl; j++){
+            if (grille[i][j].espece==renard){
+                if (grille[i][j].food == 1) grille[i][j].espece = nul;
+                else  grille[i][j].food -= 1;
+            }
+        }
+    }
+}
