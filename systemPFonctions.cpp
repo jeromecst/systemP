@@ -51,3 +51,33 @@ void GrilleVide(Case (&grille)[nL][nl]){
         }
     }
 }
+
+
+void initCase(Case &C, animal A, Coordonnee coord){
+    C.espece = A;
+    C.Coordonnee = coord;
+    C.food = FoodInit;
+}
+
+
+bool Reproduction(Case C){
+    int a;
+    if (C.espece == lapin && C.nbCaseVides >= ){
+        a = rand()%10;
+        if (a < 3){
+            return true;
+        }
+        return false;
+    }
+    if (C.espece == renard){
+        if (C.food >= FoodReprod){
+           a = rand()%20;
+           if (a == 0){
+               return true;
+           }
+        }
+        return false;
+    }
+    return false;
+}
+
