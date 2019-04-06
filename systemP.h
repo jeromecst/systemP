@@ -1,11 +1,14 @@
 #include <iostream>
 #include <stdlib.h>     
 #include <time.h>
+#include <thread>         
+#include <chrono>         
+
 
 using namespace std;
 
-const int nl = 5;
-const int nL = 5;
+const int nL = 30;
+const int nl = 30;
 const unsigned int FoodReprod = 8; 
 const unsigned int FoodInit = 5; 
 const unsigned int FoodLapin = 5; 
@@ -52,3 +55,5 @@ bool Reproduction(Case C);
 void DeplacementLapin(Case (&grille)[nL][nl]);
 void initCase(Case &C, animal A, Coordonnee coord);
 bool MangeLapin(Case (&grille)[nL][nl], Case (&grille2)[nL][nl], Case &C);
+bool TheEnd(Case (&grille)[nL][nl]);
+void tour(Case (&grille)[nL][nl]);

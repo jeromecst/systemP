@@ -3,7 +3,7 @@
 void AfficheGrille(Case (&grille)[nL][nl]){
     for(int i=0; i<nL; i++){
         for(int j=0; j<nl; j++){
-            if (grille[i][j].espece == 0) cout << " . ";
+            if (grille[i][j].espece == 0) cout << "   ";
             if (grille[i][j].espece == 1) cout << " R ";
             if (grille[i][j].espece == 2) cout << " L ";
         }
@@ -155,10 +155,10 @@ void DeplacementLapin(Case (&grille)[nL][nl]){
                 newcoord = PositionRandom(grille, G, grille[i][j]);
                 G[newcoord.x][newcoord.y] = grille[i][j];
                 G[newcoord.x][newcoord.y].coord = newcoord;
-                if(Reproduction(grille[i][j]) and (grille[i][j].coord.x != i or grille[i][j].coord.y != j) ){
+                if(Reproduction(grille[i][j]) and (newcoord.x != i or newcoord.y != j) ){
                     G[i][j].espece=lapin;
                     G[i][j].coord.x=i;
-                    G[i][j].coord.x=j;
+                    G[i][j].coord.y=j;
                 }   
                 grille[i][j].espece=nul;
             }
@@ -268,4 +268,19 @@ void DeplacementRenard(Case (&grille)[nL][nl]){
             grille[i][j]=G[i][j];
         }
     }     
+}
+
+bool TheEnd(Case (&grille)[nL][nl]){
+    for(int i=0; i<nL ; i++){
+        for(int j=0; j<nl; j++){
+            if(grille[i][j].espece==renard) return false;
+        }
+    }
+    return true;
+}
+
+void tour(Case (&grille)[nL][nl]){
+    DeplacementLapin(grille);
+    DeplacementRenard(grille);
+    ActualiseFaim(grille);
 }
