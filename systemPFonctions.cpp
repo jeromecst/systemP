@@ -16,8 +16,8 @@ void InitGrille(Case (&grille)[nL][nl]){
     int randomNombre;
     for(int i=0; i<nL; i++){
         for(int j=0; j<nl; j++){
-            grille[i][j].coord.x=j;
-            grille[i][j].coord.y=i;
+            grille[i][j].coord.x=i;
+            grille[i][j].coord.y=j;
             randomNombre = rand() % 101;
             if(randomNombre <=20){
                 grille[i][j].espece = lapin;
