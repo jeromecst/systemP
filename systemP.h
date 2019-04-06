@@ -36,3 +36,5 @@ struct Case{
 
 void afficheGrille(Case (&grille)[nL][nl]);
 void InitGrille(Case (&grille)[nL][nl]);
+bool Reproduction(Case C);
+void initCase(Case &C, animal A, Coordonnee coord);
