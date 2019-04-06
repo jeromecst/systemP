@@ -26,13 +26,11 @@ struct Case{
     int food;
     animal espece;
     Coordonnee coord;
+    int nbCaseVides; 
     //sexe sx;
     //int age;
 };
 
-//const int n = 20;
-//using colone = Case[n];
-//using grille = colone[n];
 
 void AfficheGrille(Case (&grille)[nL][nl]);
 void InitGrille(Case (&grille)[nL][nl]);

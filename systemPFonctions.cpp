@@ -69,7 +69,7 @@ void initCase(Case &C, animal A, Coordonnee coord){
     C.food = FoodInit;
 }
 
-Coordonnee PositionRandom(Case (&grille)[nL][nl],const Case (&grille2)[nL][nl], Case C){
+Coordonnee PositionRandom(Case (&grille)[nL][nl],Case (&grille2)[nL][nl], Case C){
     struct CoordPossible{
         bool possible;
         Coordonnee cord;
@@ -121,7 +121,7 @@ Coordonnee PositionRandom(Case (&grille)[nL][nl],const Case (&grille2)[nL][nl], 
     int random = rand() % ECP.taille;
     int k=0;
     for(int i=0; i<8; i++){
-        if (k==random) return ECP.tab[i].cord;
+        if (k==random and ECP.tab[i].possible) return ECP.tab[i].cord;
         else if (ECP.tab[i].possible) k++;
     }
     for(int i=0; i<2000; i++) cout << "#" <<endl;
@@ -164,11 +164,12 @@ void DeplacementLapin(Case (&grille)[nL][nl]){
                 newcoord = PositionRandom(grille, G, grille[i][j]);
                 G[newcoord.x][newcoord.y] = grille[i][j];
                 G[newcoord.x][newcoord.y].coord = newcoord;
-                if(Reproduction(grille[i][j])) G[i][j].espece=lapin;  
-                grille[i][j].espece = nul;
-                AfficheGrille(G);
-                for(int k=0; k<60; k++) cout << '#';
-                cin >>a;
+                if(Reproduction(grille[i][j])){
+                    G[i][j].espece=lapin;
+                    G[i][j].coord.x=i;
+                    G[i][j].coord.x=j;
+                }   
+                grille[i][j].espece=nul;
             }
         }
     }
@@ -179,36 +180,3 @@ void DeplacementLapin(Case (&grille)[nL][nl]){
         }
     }     
 }
-/*
-void DeplacementLapin(Case (&grille)[nL][nl]){
-    Case G[nL][nl];
-    GrilleVide(G);
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
-            if(grille[i][j].espece == renard) G[i][j]=grille[i][j];
-        }
-    }
-    Coordonnee newcoord;
-    for(int i = 0; i < nL; i++){
-        for(int j = 0; j < nl; j++){
-            if(grille[i][j].espece == lapin){
-                newcoord = PositionRandom(grille, G, grille[i][j]);
-                if(newcoord.x != i and newcoord.y != j && Reproduction(grille[i][j])){
-                    Coordonnee bb;
-                    bb.x = i;
-                    bb.y = j;
-                    initCase(G[i][j], lapin, bb);
-                } 
-                G[newcoord.x][newcoord.y] = grille[i][j];
-                G[newcoord.x][newcoord.y].coord = newcoord;
-            }
-        }
-
-    }
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
-            grille[i][j]=G[i][j];
-        }
-    }     
-}
-*/
