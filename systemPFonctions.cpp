@@ -1,104 +1,114 @@
-#include "systemP.h"
+#include "systemP.hpp"
 
-void AfficheGrille(Case (&grille)[nL][nl]){
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
-            if (grille[i][j].espece == 0) cout << "   ";
-            if (grille[i][j].espece == 1) cout << " R ";
-            if (grille[i][j].espece == 2) cout << " L ";
+void afficheGrille(Case (&grille)[hMaxGrille][lMaxGrille], const Taille &term){
+    cout << ' ';
+    for(int i=0; i<term.lo; i++) cout << '-';
+    cout << endl;
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
+            if (j==0) cout << '|'; 
+            if(grille[i][j].espece == 0) cout << " ";
+            else if(grille[i][j].espece == 2) cout << "."; //lapins
+            else cout << "®"; //renards
+            if (j==term.lo-1) cout << '|'; 
         }
         cout << " " << endl;
+    }
+    cout << ' ';
+    for(int i=0; i<term.lo; i++) cout << '-';
     cout << endl;
+}
+
+void initCase(Case (&grille)[hMaxGrille][lMaxGrille],const Animal &A, const Coordonnee &C){
+    grille[C.x][C.y].espece = A;
+    grille[C.x][C.y].coord.x = C.x;
+    grille[C.x][C.y].coord.y = C.y;
+    if(A==lapin){
+        grille[C.x][C.y].age = rand() % AgeLapin;
+        grille[C.x][C.y].food = FoodLapin;
+        //initSexe(grille, C);
+    }
+    else{
+        grille[C.x][C.y].age = rand() % AgeRenard;
+        grille[C.x][C.y].food = FoodInit;  
+        //initSexe(grille, C);
     }
 }
 
-void InitGrille(Case (&grille)[nL][nl]){
-    //7% renards
-    //20% lapins
-    int nbLapin = nl*nL * 0.2;
-    int nbRenard = nl*nL * 0.07;
+void supprimeCase(Case (&grille)[hMaxGrille][lMaxGrille],const Coordonnee &C){
+    grille[C.x][C.y] = {0 , nul, {C.x, C.y}, 0 , 0};
+}
+
+
+void initGrille(Case (&grille)[hMaxGrille][lMaxGrille],const Taille &term){   
+    int nbLapin = term.lo*term.ha * PartLapin;
+    int nbRenard = term.lo*term.ha * PartRenard;
     int x;
     int y;
-    GrilleVide(grille);
-    while(nbLapin !=0 ){
-        x= rand()%nl;
-        y= rand()%nL;
+    grilleVide(grille);
+    while(nbLapin >= 0){
+        x= rand() % term.ha;
+        y= rand() % term.lo;
         if(grille[x][y].espece==nul){
-            grille[x][y].espece=lapin;
-            grille[x][y].coord.x=x;
-            grille[x][y].coord.y=y;
+            initCase(grille, lapin, {x,y});
             nbLapin--;
         } 
     }
-    while(nbRenard != 0){
-        x= rand()%nl;
-        y= rand()%nL;
+    while(nbRenard >= 0){
+        x= rand()%term.ha;
+        y= rand()%term.lo;
         if(grille[x][y].espece==nul){
-            grille[x][y].espece=renard;
-            grille[x][y].food=FoodInit;
-            grille[x][y].coord.x=x;
-            grille[x][y].coord.y=y;
+            initCase(grille, renard, {x,y});
             nbRenard--;
         } 
     }
 }
 
-void ActualiseFaim(Case (&grille)[nL][nl]){
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
+void actualiseFaimAge(Case (&grille)[hMaxGrille][lMaxGrille],const Taille &term){
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
             if (grille[i][j].espece==renard){
-                if (grille[i][j].food == 1) grille[i][j].espece = nul;
+                if (grille[i][j].food == 1) supprimeCase(grille, Coordonnee {i,j});
                 else  grille[i][j].food -= 1;
             }
+            if(grille[i][j].age==1 && grille[i][j].espece != nul) supprimeCase(grille,Coordonnee {i,j});
+            else grille[i][j].age -= 1;
         }
     }
 }
 
-void GrilleVide(Case (&grille)[nL][nl]){
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
-            grille[i][j].espece = nul;
+void grilleVide(Case (&grille)[hMaxGrille][lMaxGrille]){
+    for(int i=0; i<hMaxGrille; i++){
+        for(int j=0; j<lMaxGrille; j++){
+            supprimeCase(grille, Coordonnee {i,j});
         }
     }
 }
 
-
-void initCase(Case &C, animal A, Coordonnee coord){
-    C.espece = A;
-    C.coord = coord;
-    C.food = FoodInit;
-}
-
-Coordonnee PositionRandom(Case (&grille)[nL][nl],Case (&grille2)[nL][nl], Case C){
-    ensCoordPossible ECP;
+Coordonnee positionRandom(Case (&grille)[hMaxGrille][lMaxGrille],Case (&grille2)[hMaxGrille][lMaxGrille], Case C, const Taille &term){
+    EnsCoordPossible ECP;
     ECP.taille = 8;
 
     CoordPossible Hg = {true, {C.coord.x-1, C.coord.y-1}};
-    ECP.tab[0]=Hg;
-
     CoordPossible H = {true, {C.coord.x-1, C.coord.y}};
-    ECP.tab[1]=H;
-
     CoordPossible Hd = {true, {C.coord.x-1, C.coord.y+1}};
-    ECP.tab[2]=Hd;
-
     CoordPossible D = {true, {C.coord.x, C.coord.y+1}};
-    ECP.tab[3]=D;
-
     CoordPossible Bd = {true, {C.coord.x+1, C.coord.y+1}};
-    ECP.tab[4]=Bd;
-
     CoordPossible B = {true, {C.coord.x+1, C.coord.y}};
-    ECP.tab[5]=B;
-
     CoordPossible Bg = {true, {C.coord.x+1, C.coord.y-1}};
-    ECP.tab[6]=Bg;
-
     CoordPossible G = {true, {C.coord.x, C.coord.y-1}};
+
+    ECP.tab[0]=Hg;
+    ECP.tab[1]=H;
+    ECP.tab[2]=Hd;
+    ECP.tab[3]=D;
+    ECP.tab[4]=Bd;
+    ECP.tab[5]=B;
+    ECP.tab[6]=Bg;
     ECP.tab[7]=G;
 
     for(int i=0; i<8; i++){
-        if(ECP.tab[i].cord.x <0 or ECP.tab[i].cord.y <0 or ECP.tab[i].cord.x > nl-1 or ECP.tab[i].cord.y > nL-1 ){
+        if(ECP.tab[i].cord.x <0 or ECP.tab[i].cord.y <0 or ECP.tab[i].cord.x > term.ha-1 or ECP.tab[i].cord.y > term.lo-1 ){
             ECP.tab[i].possible = false;
             ECP.taille--;
         }
@@ -115,22 +125,20 @@ Coordonnee PositionRandom(Case (&grille)[nL][nl],Case (&grille2)[nL][nl], Case C
         if (k==random and ECP.tab[i].possible) return ECP.tab[i].cord;
         else if (ECP.tab[i].possible) k++;
     }
-    for(int i=0; i<2000; i++) cout << "#" <<endl;
+    return C.coord;
 }
 
-bool Reproduction(Case C){
+bool reproduction(Case C){
     int a;
     if (C.espece == lapin && C.nbCaseVides >= MinFreeBirthLapin){
-        a = rand()%10;
-        if (a < 3){
+        if (rand()%ProbBirthLapin < 3){
             return true;
         }
         return false;
     }
     if (C.espece == renard){
         if (C.food >= FoodReprod){
-           a = rand()%20;
-           if (a == 0){
+           if (rand()%ProbBirthRenard == 0){
                return true;
            }
         }
@@ -139,69 +147,64 @@ bool Reproduction(Case C){
     return false;
 }
 
-void DeplacementLapin(Case (&grille)[nL][nl]){
-    Case G[nL][nl];
-    GrilleVide(G);
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
+void deplacementLapin(Case (&grille)[hMaxGrille][lMaxGrille], const Taille &term){
+    Case G[hMaxGrille][lMaxGrille];
+    grilleVide(G);
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
             if(grille[i][j].espece == renard) G[i][j]=grille[i][j];
         }
     }
-    string a;
     Coordonnee newcoord;
-    for(int i = 0; i < nL; i++){
-        for(int j = 0; j < nl; j++){
+    for(int i = 0; i < term.ha; i++){
+        for(int j = 0; j < term.lo; j++){
             if(grille[i][j].espece == lapin){
-                newcoord = PositionRandom(grille, G, grille[i][j]);
+                newcoord = positionRandom(grille, G, grille[i][j], term);
                 G[newcoord.x][newcoord.y] = grille[i][j];
                 G[newcoord.x][newcoord.y].coord = newcoord;
-                if(Reproduction(grille[i][j]) and (newcoord.x != i or newcoord.y != j) ){
+                if(reproduction(grille[i][j]) and (newcoord.x != i or newcoord.y != j) ){
                     G[i][j].espece=lapin;
                     G[i][j].coord.x=i;
                     G[i][j].coord.y=j;
+                    G[i][j].age=AgeLapin;
+                    //initSexe(grille, {i,j});
                 }   
-                grille[i][j].espece=nul;
+                supprimeCase(grille,Coordonnee {i,j});
             }
         }
     }
-    GrilleVide(grille);
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
+    grilleVide(grille);
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
             grille[i][j]=G[i][j];
         }
     }     
 }
 
-bool MangeLapin(Case (&grille)[nL][nl], Case (&grille2)[nL][nl], Case &C){
-    ensCoordPossible ECP;
+bool mangeLapin(Case (&grille)[hMaxGrille][lMaxGrille], Case (&grille2)[hMaxGrille][lMaxGrille], Case &C , const Taille &term){
+    EnsCoordPossible ECP;
     ECP.taille = 8;
 
     CoordPossible Hg = {true, {C.coord.x-1, C.coord.y-1}};
-    ECP.tab[0]=Hg;
-
     CoordPossible H = {true, {C.coord.x-1, C.coord.y}};
-    ECP.tab[1]=H;
-
     CoordPossible Hd = {true, {C.coord.x-1, C.coord.y+1}};
-    ECP.tab[2]=Hd;
-
     CoordPossible D = {true, {C.coord.x, C.coord.y+1}};
-    ECP.tab[3]=D;
-
     CoordPossible Bd = {true, {C.coord.x+1, C.coord.y+1}};
-    ECP.tab[4]=Bd;
-
     CoordPossible B = {true, {C.coord.x+1, C.coord.y}};
-    ECP.tab[5]=B;
-
     CoordPossible Bg = {true, {C.coord.x+1, C.coord.y-1}};
-    ECP.tab[6]=Bg;
-
     CoordPossible G = {true, {C.coord.x, C.coord.y-1}};
+
+    ECP.tab[0]=Hg;
+    ECP.tab[1]=H;
+    ECP.tab[2]=Hd;
+    ECP.tab[3]=D;
+    ECP.tab[4]=Bd;
+    ECP.tab[5]=B;
+    ECP.tab[6]=Bg;
     ECP.tab[7]=G;
 
     for(int i=0; i<8; i++){
-        if(ECP.tab[i].cord.x <0 or ECP.tab[i].cord.y <0 or ECP.tab[i].cord.x > nl-1 or ECP.tab[i].cord.y > nL-1 ){
+        if(ECP.tab[i].cord.x <0 or ECP.tab[i].cord.y <0 or ECP.tab[i].cord.x > term.ha-1 or ECP.tab[i].cord.y > term.lo-1 ){
             ECP.tab[i].possible = false;
             ECP.taille--;
         }
@@ -224,34 +227,35 @@ bool MangeLapin(Case (&grille)[nL][nl], Case (&grille2)[nL][nl], Case &C){
     return false;
 }
 
-void DeplacementRenard(Case (&grille)[nL][nl]){
-    Case G[nL][nl];
-    GrilleVide(G);
+void deplacementRenard(Case (&grille)[hMaxGrille][lMaxGrille], const Taille &term){   
+    Case G[hMaxGrille][lMaxGrille];
+    grilleVide(G);
     Coordonnee newcoord;
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
             if(grille[i][j].espece == lapin) G[i][j] = grille[i][j];
         }
     }
-    for(int i = 0; i < nL; i++){
-        for(int j = 0; j < nl; j++){
+    for(int i = 0; i < term.ha; i++){
+        for(int j = 0; j < term.lo; j++){
             if(grille[i][j].espece == renard){
-               if(MangeLapin(grille,G, grille[i][j])){
-                   if(Reproduction(grille[i][j])){
+               if(mangeLapin(grille,G, grille[i][j], term)){
+                   if(reproduction(grille[i][j])){
                        G[i][j].espece = renard;
                        G[i][j].coord.x = i;
                        G[i][j].coord.y = j;
                        G[i][j].food = FoodInit;
+                       G[i][j].age=AgeRenard;
                     }
                    G[grille[i][j].coord.x][grille[i][j].coord.y] = grille[i][j];
                    G[grille[i][j].coord.x][grille[i][j].coord.y].food+=5;
-                   if (G[grille[i][j].coord.x][grille[i][j].coord.y].food >10) G[grille[i][j].coord.x][grille[i][j].coord.y].food =10;
+                   if (G[grille[i][j].coord.x][grille[i][j].coord.y].food >MaxFood) G[grille[i][j].coord.x][grille[i][j].coord.y].food = MaxFood;
                }
                 else{
-                    newcoord = PositionRandom(grille, G, grille[i][j]);
+                    newcoord = positionRandom(grille, G, grille[i][j], term);
                     G[newcoord.x][newcoord.y] = grille[i][j];
                     G[newcoord.x][newcoord.y].coord = newcoord;
-                    if( Reproduction(grille[i][j]) && (newcoord.x != i or newcoord.y != j) ){
+                    if( reproduction(grille[i][j]) && (newcoord.x != i or newcoord.y != j) ){
                         G[i][j].espece = renard; 
                         G[i][j].coord.x = i;
                         G[i][j].coord.y = j;
@@ -262,25 +266,88 @@ void DeplacementRenard(Case (&grille)[nL][nl]){
             }
         }
     }
-    GrilleVide(grille);
-    for(int i=0; i<nL; i++){
-        for(int j=0; j<nl; j++){
+    grilleVide(grille);
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
             grille[i][j]=G[i][j];
         }
     }     
 }
 
-bool TheEnd(Case (&grille)[nL][nl]){
-    for(int i=0; i<nL ; i++){
-        for(int j=0; j<nl; j++){
+bool theEnd(Case (&grille)[hMaxGrille][lMaxGrille],const Taille &term){  
+    for(int i=0; i<term.ha ; i++){
+        for(int j=0; j<term.lo; j++){
             if(grille[i][j].espece==renard) return false;
         }
     }
     return true;
 }
 
-void tour(Case (&grille)[nL][nl]){
-    DeplacementLapin(grille);
-    DeplacementRenard(grille);
-    ActualiseFaim(grille);
+void tour(Case (&grille)[hMaxGrille][lMaxGrille], const Taille &term){
+    deplacementLapin(grille, term);
+    deplacementRenard(grille, term);
+    actualiseFaimAge(grille, term);
+}
+
+void afficheCompteur(Case (&grille)[hMaxGrille][lMaxGrille],const Taille &term){
+    int nbR=0;
+    int nbL=0;
+    for(int i=0; i<term.ha; i++){
+        for(int j=0; j<term.lo; j++){
+            if(grille[i][j].espece == renard) nbR++;
+            else if(grille[i][j].espece == lapin) nbL++;
+        }
+    }
+    int renardPourcent = floor(100.*(float(nbR)/float(term.ha*term.lo)));
+    int lapinPourcent = floor(100.*(float(nbL)/float(term.ha*term.lo)));
+    cout << "renard : ";
+    for(int i=0; i<term.lo+longueurMoins - 15; i+=3){
+		if(i<= floor(((float)nbR*((float)term.lo+(float)longueurMoins-14.)) / ((float)term.lo * (float)term.ha)) +15) cout << "###";
+		else cout << "   ";
+    }
+    cout <<'(' << renardPourcent << '%'<<')';
+    cout << endl;
+
+
+    cout << "lapins : ";
+    for(int i=0; i<term.lo+longueurMoins - 15; i++){
+		if(i<= floor(((float)nbL*((float)term.lo+(float)longueurMoins-14.)) / ((float)term.lo * (float)term.ha)) +15) cout << "#";
+		else cout << ' ';
+    }	
+    cout << '('<< lapinPourcent << '%'<<')';
+    cout << endl;
+}
+
+void pause(const Taille &term, unsigned int &cstTemps){
+    switch (term.ha * term.lo)
+    {
+        case 0 ... 400 : cstTemps = 120; break;
+        case 401 ... 1000 : cstTemps = 100; break;
+        case 1001 ... 3500 : cstTemps = 75; break;
+        case 3501 ... 5000 : cstTemps = 60; break;
+        case 5001 ... 10000 : cstTemps = 35; break;
+        case 10001 ... 20000 : cstTemps = 25; break;
+        default: cstTemps = 10; break;
+    }
+    std::this_thread::sleep_for (std::chrono::milliseconds(cstTemps));
+}
+
+void afficheTitre(const Taille &term, const unsigned int &cstTemps){
+    string b = " (" + to_string(term.lo) + 'x' + to_string(term.ha) + ')';
+    string c = titre + b + '@'+to_string(int(1./float(cstTemps*.001)))+"Hz";
+    if(c.size() <= term.lo){
+        cout << endl;
+        for(int i=0; i < (term.lo - c.size())/2 ; i++) cout << " ";
+        cout << c;
+        for(int i=0; i < (term.lo - c.size())/2 ; i++) cout << " ";
+        cout << endl;
+    }
+    else if (b.size() <= term.lo){
+        cout << endl;
+        cout << b+to_string(int(1./float(cstTemps*.001)))+"Hz";
+        cout << endl;
+    }
+    else{
+        for(int i=0; i<2; i++) cout << endl;
+    }
 }
