@@ -1,6 +1,6 @@
 # systemP
 
-systemP is the second project of the first year of computer science in Université Paris Sud, 2018-2019. (info121)
+systemP is the second project of the first year of computer science in Université Paris Sud, 2018-2019. (![info12](https://www.lri.fr/~hivert/COURS/Info121/projet-lapins.pdf))
 
 ---
 ### overview
