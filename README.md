@@ -22,15 +22,10 @@ systemP is the second project of the first year of computer science at Universit
 * the size of the grid is **adaptive** to the size of the terminal
 * use of ```"\033[A"```
 * **real-time** display of fps, terminal and grid size
-* **interactive** display of title, lines and data 
-
----
-### requirements
-
-* [SFML 2.5.1+](https://www.sfml-dev.org/download.php)
+* **interactive** display of title, lines and data
 
 ---
 ### compilation
 
 * `make t` to compile the **terminal version**, then `./t` to execute
-* `make g` to compile the **graphical version**, then `./g` to execute
+
