@@ -10,7 +10,6 @@ systemP is the second project of the first year of computer science in Universit
 * **real-time** curved lines
 * all **const** can be easily changed
 * **mutliple files** for differents versions, functions, consts...
-* Utilisation de nombreux **types abstraits**
 * use of multiple **struc, enum**
 
 #### graphical version
