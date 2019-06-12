@@ -27,9 +27,10 @@ systemP is the second project of the first year of computer science at Universit
 ---
 ### requirements
 
-* SFML and install it in the `home` directory
+* [SFML 2.5.1+](https://www.sfml-dev.org/download.php)
 
 ---
 ### compilation
 
 * `make t` to compile the **terminal version**, then `./t` to execute
+* `make g` to compile the **graphical version**, then `./g` to execute
