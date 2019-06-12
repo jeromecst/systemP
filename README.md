@@ -1,6 +1,6 @@
 # systemP
 
-systemP is the second project of the first year of computer science in Université Paris Sud, 2018-2019. (![info12](https://www.lri.fr/~hivert/COURS/Info121/projet-lapins.pdf))
+systemP is the second project of the first year of computer science in Université Paris Sud, 2018-2019. ([info12](https://www.lri.fr/~hivert/COURS/Info121/projet-lapins.pdf) )
 
 ---
 ### overview
@@ -28,7 +28,8 @@ systemP is the second project of the first year of computer science in Universit
 ### requirements
 
 * SFML and install it in the `home` directory
---
+
+---
 ### compilation
 
 * `make t` to compile the **terminal version**, then `./t` to execute
