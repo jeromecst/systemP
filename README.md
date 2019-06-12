@@ -5,7 +5,7 @@ systemP is the second project of the first year of computer science in Universit
 ---
 ### overview
 
-## code
+#### code
 * **documented** functions
 * **real-time** curved lines
 * all **const** can be easily changed
@@ -13,13 +13,13 @@ systemP is the second project of the first year of computer science in Universit
 * Utilisation de nombreux **types abstraits**
 * use of multiple **struc, enum**
 
-## graphical version
+#### graphical version
 * using **SFML**
 * **Multi-thread** to dislpay the curved lines and the grid at the same time
 * **random** colors and rotations withing a range for the fox and rabbit each lap 
 * multiple windows
 
-## terimal version :
+#### terimal version :
 * the size of the grid is **adaptive** to the size of the terminal
 * use of ```"\033[A"```
 * **real-time** display of fps, terminal and grid size
