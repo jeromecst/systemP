@@ -8,5 +8,5 @@ systemP is the second project of the first year of computer science in Universit
 
 # compilation
 
-* `make t` to compile the ***terminal version***, then `./t` to execute
-* `make g` to compile the ***graphical version***, then `./g` to execute
+* `make t` to compile the **terminal version**, then `./t` to execute
+* `make g` to compile the **graphical version**, then `./g` to execute
