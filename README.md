@@ -24,10 +24,11 @@ systemP is the second project of the first year of computer science in Universit
 * **real-time** display of fps, terminal and grid size
 * **interactive** display of title, lines and data 
 
+---
 ### requirements
 
 * SFML and install it in the `home` directory
-
+--
 ### compilation
 
 * `make t` to compile the **terminal version**, then `./t` to execute
