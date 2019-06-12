@@ -1,6 +1,7 @@
 # systemP
 
 systemP is the second project of the first year of computer science at Université Paris Sud, 2018-2019. ([info121](https://www.lri.fr/~hivert/COURS/Info121/projet-lapins.pdf))
+this version doesn't need SFML library and there is no line display, only terminal.
 
 ---
 ### overview
