@@ -9,7 +9,7 @@ void afficheGrille(Case (&grille)[hMaxGrille][lMaxGrille], const Taille &term){
             if (j==0) cout << '|'; 
             if(grille[i][j].espece == 0) cout << " ";
             else if(grille[i][j].espece == 2) cout << "."; //lapins
-            else cout << "®"; //renards
+            else cout << BOLD(FYEL("@")); //renards
             if (j==term.lo-1) cout << '|'; 
         }
         cout << " " << endl;
