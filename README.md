@@ -13,7 +13,7 @@ this version doesn't need SFML library and there is no line display, only termin
 * **mutliple files** for differents versions, functions, consts...
 * use of multiple **struc, enum**
 
-#### terimal version
+#### terminal version
 * the size of the grid is **adaptive** to the size of the terminal
 * use of ```"\033[A"```
 * **real-time** display of fps, terminal and grid size
