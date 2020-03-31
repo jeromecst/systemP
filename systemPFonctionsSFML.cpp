@@ -27,7 +27,7 @@ void drawLapin(const Coordonnee &C, sf::RenderWindow& window,int taillePoint){
         case 2 : figure.setFillColor(sf::Color(153, 155, 164)); break;
         case 3 : figure.setFillColor(sf::Color(153, 162, 170)); break;
         case 4 : figure.setFillColor(sf::Color(254, 227, 197)); break;
-        case 5 : figure.setFillColor(sf::Color(260, 227, 197)); break;
+	case 5 : figure.setFillColor(sf::Color((sf::Uint8)260, 227, 197)); break;
         case 6 : figure.setFillColor(sf::Color(254, 235, 197)); break;
         case 7 : figure.setFillColor(sf::Color(254, 227, 203)); break;
     }

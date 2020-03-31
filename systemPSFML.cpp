@@ -18,7 +18,7 @@ int main(){
     }
 
     TCourbe courbesT;
-    Taille term = {size.x/taillePoint, size.y/taillePoint};
+    Taille term = {(int)(size.x/taillePoint),(int) (size.y/taillePoint)};
     initGrille(grille, term);
     cout << "taille grille : " << term.lo << "x"<<term.ha<<endl<< "taille case : " << taillePoint<<"px"<<endl;
     while(not theEnd(grille, term)and (term.ha <= hMaxGrille and term.lo <= lMaxGrille) and window.isOpen() and courbe.isOpen()){
