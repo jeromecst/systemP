@@ -62,7 +62,7 @@ struct EnsCoordPossible{
 };
 
 struct Taille{
-    unsigned int ha, lo;
+    int ha, lo;
 };
 
 struct TCourbe{
