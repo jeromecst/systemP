@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include <cmath>
 #include <SFML/Graphics.hpp>
+#include "colors.h"
 
 using namespace std;
 
