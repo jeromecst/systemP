@@ -7,4 +7,4 @@ t:
 	g++ -std=c++11 systemP.cpp systemPFonctions.cpp -o t
 
 clean:
-	rm *.o o
+	rm t

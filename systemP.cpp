@@ -7,7 +7,7 @@ int main(){
     ioctl(0, TIOCGWINSZ, &w);
     Case grille[hMaxGrille][lMaxGrille];
     unsigned int cstTemps = 1;
-    Taille term = {w.ws_row-hauteurMoins, w.ws_col-longueurMoins};
+    Taille term = {(int)(w.ws_row-hauteurMoins), (int)(w.ws_col-longueurMoins)};
     initGrille(grille, term);
     while(not theEnd(grille, term)and (term.ha <= hMaxGrille and term.lo <= lMaxGrille) ){
         ioctl(0, TIOCGWINSZ, &w); // on récupère la taille du terminal

@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include <cmath>
 #include <SFML/Graphics.hpp>
+#include "colors.h"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ struct EnsCoordPossible{
 };
 
 struct Taille{
-    unsigned int ha, lo;
+    int ha, lo;
 };
 
 struct TCourbe{
